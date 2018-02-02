@@ -46,27 +46,26 @@
     data(){
       return {
         nav_menu_data: [{
-          title: "主页",
-          path: "/home",
-          icon: "fa-home"
+          title: "特征树管理",
+          path: "/tree",
+          icon: "fa-sitemap"
         }, {
-          title: "表格管理",
-          path: "/table",
-          icon: "fa-table",
-          child: [{
-            title: "基本表格",
-            path: "/table/base"
-          }, {
-            title: "排序表格",
-            path: "/table/sort"
-          }]
+          title: "规则库管理",
+          path: "/rule",
+          icon: "fa-object-group",
         }, {
-          title: "图表管理",
-          path: "/charts",
-          icon: "fa-bar-chart-o",
+          title: "业务建模",
+          path: "/modeling",
+          icon: "fa-cubes",
           child: [{
-            title: "柱状图表",
-            path: "/charts/bar"
+            title: "特征树裁剪",
+            path: "/modeling/treecut"
+          },{
+            title: "元模型构建",
+            path:"/modeling/metamodel"
+          },{
+            title: "基模型构建",
+            path:"/modeling/basicmodel"
           }]
         }]
       }

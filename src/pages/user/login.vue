@@ -32,8 +32,8 @@
     data(){
       return {
         form: {
-          username: null,
-          password: null
+          username: "admin",
+          password: "admin"
         },
         rules: {
           username: [{required: true, message: '请输入账户名！', trigger: 'blur'}],

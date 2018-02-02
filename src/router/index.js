@@ -1,14 +1,5 @@
 /**
- * Created by zzmhot on 2017/3/23.
- *
  * 路由Map
- *
- * @author: zzmhot
- * @github: https://github.com/zzmhot
- * @email: zzmhot@163.com
- * @Date: 2017/3/23 18:30
- * @Copyright(©) 2017 by zzmhot.
- *
  */
 
 import Vue from 'vue'
@@ -23,18 +14,19 @@ import viewPageComponent from 'pages/App'
 
 //home
 import homeComponent from 'pages/home'
+//rule
+import ruleComponent from 'pages/rule'
+//treecut
+import treeCutComponent from 'pages/modeling/treecut'
+//metamodel
+import metaModelComponent from 'pages/modeling/metamodel'
+//basicmodel
+import basicModelComponent from 'pages/modeling/basicmodel'
 //404
 import noPageComponent from 'pages/error/404'
 //login
 import loginComponent from 'pages/user/login'
-//base table
-import baseTableComponent from 'pages/table/base'
-//sort table
-import sortTableComponent from 'pages/table/sort'
-//save table
-import saveTableComponent from 'pages/table/save'
-//bar charts
-import barChartsComponent from 'pages/charts/bar'
+
 
 Vue.use(VueRouter)
 
@@ -53,33 +45,25 @@ const routes = [{
   component: loginComponent
 }, {
   path: '/',
-  redirect: '/home',
+  redirect: '/tree',
   component: viewPageComponent,
   children: [{
-    path: '/home',
-    name: 'home',
+    path: '/tree',
+    name: 'tree',
     component: homeComponent,
     meta: {
-      title: "主页",
+      title: "特征树管理",
       auth: true
     }
-  }, {
-    path: '/table/base',
-    name: 'tableBase',
-    component: baseTableComponent,
-    meta: {
-      title: "基本表格",
-      auth: true
+  },{
+    path:'/rule',
+    name:'rule',
+    component: ruleComponent,
+    meta:{
+      title:"规则库管理",
+      auth:true
     }
-  }, {
-    path: '/table/sort',
-    name: 'tableSort',
-    component: sortTableComponent,
-    meta: {
-      title: "排序表格",
-      auth: true
-    }
-  }, {
+  }, /* {
     path: '/table/update/:id',
     name: 'tableUpdate',
     component: saveTableComponent,
@@ -95,12 +79,28 @@ const routes = [{
       title: "添加数据",
       auth: true
     }
-  }, {
-    path: '/charts/bar',
-    name: 'chartsBar',
-    component: barChartsComponent,
+  }, */ {
+    path: '/modeling/treecut',
+    name: 'TreeCut',
+    component: treeCutComponent,
     meta: {
-      title: "柱状图表",
+      title: "特征树裁剪",
+      auth: true
+    }
+  },{
+    path: '/modeling/metamodel',
+    name: 'metamodel',
+    component: metaModelComponent,
+    meta: {
+      title: "元模型构建",
+      auth: true
+    }
+  },{
+    path: '/modeling/basicmodel',
+    name: 'basicmodel',
+    component: basicModelComponent,
+    meta: {
+      title: "基模型构建",
       auth: true
     }
   }]

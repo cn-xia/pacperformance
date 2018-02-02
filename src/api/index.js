@@ -9,13 +9,10 @@
  */
 
 //导入模块
-import * as api_file from './file'
-import * as api_table from './table'
+
 import * as api_user from './user'
 
 const apiObj = {
-  api_file,
-  api_table,
   api_user
 }
 
