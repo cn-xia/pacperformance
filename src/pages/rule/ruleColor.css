@@ -1,0 +1,82 @@
+/*通用*/
+.ruleBolck{
+  display: inline-block;
+  font-weight: normal;
+  line-height: 15px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+  color:#333;
+  background-color:#fff;
+  border-color:#ccc;
+  margin:3px;
+}
+.ruleBolck:hover{
+  color:#333;
+  background-color: #ffffff;
+  border-color:#adadad
+}
+.ruleBolck:focus, .ruleBolck:hover {
+  text-decoration: none;
+}
+/*句子*/
+.st{
+    display: table;
+    background-color: #fff8f9;
+    margin: 10px 5px;
+}
+.st:hover{
+  background-color: #fff3fd;
+}
+/*可变值*/
+  /*实体*/
+.subject{
+  background-color: #ffffe3;
+}
+.subject:hover{
+  background-color: #feffd5;
+}
+  /*操作符*/
+.op{
+  background-color: #f2f2f2;
+}
+.op:hover{
+  background-color: #dcdcdc;
+}
+  /*可变项1*/
+.value{
+  background-color: #f0faff;
+}
+.value:hover{
+  background-color: #e6f8ff;
+}
+  /*固定属性*/
+.attr{
+
+  background-color: #fff4ef;
+
+}.attr:hover{
+  background-color: #fff1ea;
+
+}
+/*边框*/
+.circle{
+  background-color: #f8fffd;
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #adadad;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+
+}

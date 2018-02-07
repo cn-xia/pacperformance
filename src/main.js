@@ -32,6 +32,11 @@ import App from './App'
 //导入mock数据
 import './mock'
 
+//导入拖拽插件
+import Vddl from 'vddl';
+//使用拖拽组件
+Vue.use(Vddl);
+
 //使用element-ui
 Vue.use(ElementUI)
 
