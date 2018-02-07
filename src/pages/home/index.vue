@@ -41,7 +41,6 @@
   export default{
     data(){
       return {
-        msg: 'home page',
         currentRow: null,
         treeData:[{
           name:"第一棵树"

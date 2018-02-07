@@ -9,7 +9,7 @@ import go from "gojs"
 var myDiagram;
 var $;
 export default {
-    name:"drawTreeArea",
+    name:"cutTreeArea",
     data() {
         return{
 

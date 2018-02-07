@@ -10,11 +10,13 @@ import mainContent from 'components/mainContent'
 import panelTitle from 'components/panelTitle'
 import bottomToolBar from 'components/bottomToolBar'
 import drawTreeArea from 'components/drawTreeArea'
+import cutTreeArea from 'components/cutTreeArea'
 
 export {
   leftSlide,
   mainContent,
   panelTitle,
   bottomToolBar,
-  drawTreeArea
+  drawTreeArea,
+  cutTreeArea
 }
