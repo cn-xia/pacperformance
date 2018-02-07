@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="min-width: 315px; height:100%; border: 1px solid lightgray">
     <!-- <h3>商业规则</h3> -->
     <!--<div class="singleRule"style="display: block">-->
-    <span v-for="item in rule" class="ruleBolck st" >
+    <span style="margin-left: 10px;" v-for="item in rule" class="ruleBolck st" >
       <span contenteditable class="ruleBolck subject">
         {{item.subject}}</span>
       <!--操作符-->
@@ -38,13 +38,18 @@
       </span>
 
 
-    <button @click="addNewRule" class="botcircle" style="margin-left: 200px">＋</button>
+    <button @click="addNewRule" class="botcircle" style="margin-left: 100px">＋</button>
     <button @click="delNewRule" class="botcircle" >－</button>
+    <!--&times;-->
   </div>
 </template>
 <style>
 .botcircle{
   display: inline;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(9, 9, 9, 0.17);
+  border-radius: 50%;
 }
 </style>
 <script>
@@ -225,7 +230,8 @@
       this.rule.pop()
       }
 
-    }
+    },
+
   }
 
 </script>

@@ -2,11 +2,18 @@
   <div class="panel">
     <panel-title :title="$route.meta.title"></panel-title>
     <div class="panel-body">
-      <el-row :gutter="500">
+      <el-row :gutter="20">
 
-        <el-col class="rule" :span="5">
-          <div  style=" width:600px;height:100%; border: 1px solid lightgray">
-            <ruleTable></ruleTable>
+        <el-col class="rule" :span="8">
+          <div  >
+            <div class="main-right tab">
+              <div class="tabs">
+                <button class="tab" style="display:inline-block;float: left"@click="toggleTab('ruleTable')"><a>组织货品</a></button>
+                <button class="tab" style="display:inline-block"@click="toggleTab('ruleTable')"><a>商品发布准备</a></button>
+
+              </div>
+            <component :is="currentTab"></component>
+            </div>
           </div>
 
           <!--<div v-for="(list,index) in lists" class="rule v-col&#45;&#45;auto">-->
@@ -44,7 +51,7 @@
 
         </el-col>
         <el-col  :span="5" >
-          <br/>
+          <br/><br/><br/><br/>
           <smalblock ></smalblock>
 
           <!--<div v-for="(list, listName) in lists" class="v-col&#45;&#45;auto">-->
@@ -108,7 +115,8 @@
         },
         rules:[
 
-        ]
+        ],
+        currentTab:ruleTable
       }},
     mounted:function(){
       this.getData()
@@ -117,7 +125,12 @@
       getData:function () {
         this.rules=rules.rules
         this.slots = rules.rules
-      }
+      },
+      toggleTab:function(tab){
+        this.currentTab = tab;
+
+      },
+
     },
     directives: {
       draggable: {
@@ -162,7 +175,7 @@
     }
   }
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
     .rule .slot {
         width: 100%;
         height: 558px;
@@ -170,5 +183,26 @@
         //background-color:	#F5FFFA;
        // border-radius: 8px;
     }
+  .tabs{
+    overflow: hidden;
 
+    border: 1px solid lightgray;
+    background-color: #f1f1f1;
+  }
+    .tabs .tab {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+    .tab .tab:hover {
+      background-color: #ddd;
+    }
+    .tab .tab.active {
+      background-color: #ccc;
+    }
 </style>

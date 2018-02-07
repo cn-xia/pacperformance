@@ -1,6 +1,7 @@
 /*通用*/
 .ruleBolck{
-  display: inline-block;
+  display: inline-flex;
+  position: relative;
   font-weight: normal;
   line-height: 15px;
   text-align: center;
