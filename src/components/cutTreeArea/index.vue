@@ -1,13 +1,13 @@
 <template>
     <section style="display: flex;justify-content: space-between;">
-        <div id="myDiagramDiv" class="Diagram">
+        <div id="treeCutDiagramDiv" class="treeCutDiagram">
         </div>
     </section>
 </template>
 <script>
 import go from "gojs"
-var myDiagram;
-var $;
+
+var treeCutDiagram;
 export default {
     name:"cutTreeArea",
     data() {
@@ -15,11 +15,14 @@ export default {
 
         }
     },
+    components:{
+        
+    },
     methods:{
         init(){
-            $ = go.GraphObject.make;
-            myDiagram =
-                $(go.Diagram, "myDiagramDiv",
+            var $ = go.GraphObject.make;
+            treeCutDiagram =
+                $(go.Diagram, "treeCutDiagramDiv",
                 {
                     allowCopy: false,
                     initialContentAlignment: go.Spot.Center,
@@ -35,19 +38,19 @@ export default {
                     validCycle: go.Diagram.CycleNotDirected,
                     "undoManager.isEnabled": true
                 });
-            myDiagram.addDiagramListener("Modified", function(e) {
+            /* treeCutDiagram.addDiagramListener("Modified", function(e) {
                 var button = document.getElementById("SaveButton");
-                if (button) button.disabled = !myDiagram.isModified;
+                if (button) button.disabled = !treeCutDiagram.isModified;
                 var idx = document.title.indexOf("*");
-                if (myDiagram.isModified) {
+                if (treeCutDiagram.isModified) {
                 if (idx < 0) document.title += "*";
                 } else {
                 if (idx >= 0) document.title = document.title.substr(0, idx);
                 }
-            });
+            }); */
             var graygrad = $(go.Brush, "Linear",
                        { 0: "white", 0.1: "whitesmoke", 0.9: "whitesmoke", 1: "lightgray" });
-            myDiagram.nodeTemplate =  // the default node template
+            treeCutDiagram.nodeTemplate =  // the default node template
                 $(go.Node, "Spot",
                 { selectionAdorned: false, textEditable: true, locationObjectName: "BODY" },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -79,7 +82,7 @@ export default {
                     { width: 4, height: 4, fill: "dodgerblue", stroke: null })
                 )
                 );
-            myDiagram.nodeTemplate.contextMenu =
+            treeCutDiagram.nodeTemplate.contextMenu =
                 $(go.Adornment, "Vertical",
                 $("ContextMenuButton",
                     $(go.TextBlock, "Rename"),
@@ -92,7 +95,7 @@ export default {
                     new go.Binding("visible", "", function(o) { return o.diagram && o.diagram.commandHandler.canDeleteSelection(); }).ofObject())
                 );
             
-            myDiagram.nodeTemplateMap.add("Loading",
+            treeCutDiagram.nodeTemplateMap.add("Loading",
                 $(go.Node, "Spot",
                 { selectionAdorned: false, textEditable: true, locationObjectName: "BODY" },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -117,13 +120,13 @@ export default {
                 )
                 ));
 
-            myDiagram.nodeTemplateMap.add("Recycle",
+            treeCutDiagram.nodeTemplateMap.add("Recycle",
                 $(go.Node, "Auto",
                 { portId: "to", toLinkable: true, deletable: false,
                     layerName: "Background", locationSpot: go.Spot.Center },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
                 { dragComputation: function(node, pt, gridpt) { return pt; } },
-                { mouseDrop: function(e, obj) { myDiagram.commandHandler.deleteSelection(); } },
+                { mouseDrop: function(e, obj) { treeCutDiagram.commandHandler.deleteSelection(); } },
                 $(go.Shape,
                     { fill: "lightgray", stroke: "gray" ,figure:"Database",width:60}),
                 $(go.TextBlock, "回收站",
@@ -187,19 +190,19 @@ export default {
                 }
             }
 
-            myDiagram.addDiagramListener("LinkDrawn", function(e) {
+            treeCutDiagram.addDiagramListener("LinkDrawn", function(e) {
                 var link = e.subject;
-                if (link.toNode.category === "Recycle") myDiagram.remove(link);
+                if (link.toNode.category === "Recycle") treeCutDiagram.remove(link);
                 lowlight();
             });
 
-            myDiagram.addDiagramListener("LinkRelinked", function(e) {
+            treeCutDiagram.addDiagramListener("LinkRelinked", function(e) {
                 var link = e.subject;
-                if (link.toNode.category === "Recycle") myDiagram.remove(link);
+                if (link.toNode.category === "Recycle") treeCutDiagram.remove(link);
                 lowlight();
             });
 
-            myDiagram.linkTemplate =
+            treeCutDiagram.linkTemplate =
                 $(go.Link,
                 { selectionAdorned: false, fromPortId: "from", toPortId: "to", relinkableTo: true },
                 $(go.Shape,
@@ -238,12 +241,12 @@ export default {
                 };
             }
 
-            var ltool = myDiagram.toolManager.linkingTool;
+            var ltool = treeCutDiagram.toolManager.linkingTool;
             commonLinkingToolInit(ltool);
             // do not allow links to be drawn starting at the "to" port
             ltool.direction = go.LinkingTool.ForwardsOnly;
 
-            var rtool = myDiagram.toolManager.relinkingTool;
+            var rtool = treeCutDiagram.toolManager.relinkingTool;
             commonLinkingToolInit(rtool);
             // change the standard relink handle to be a shape that takes the shape of the link
             rtool.toHandleArchetype =
@@ -251,7 +254,7 @@ export default {
                 { isPanelMain: true, fill: null, stroke: "dodgerblue", strokeWidth: 4 });
 
             // use a special DraggingTool to cause the dragging of a Link to start relinking it
-           // myDiagram.toolManager.draggingTool = new DragLinkingTool();
+           // treeCutDiagram.toolManager.draggingTool = new DragLinkingTool();
 
             function DragLinkingTool() {
                 go.DraggingTool.call(this);
@@ -283,14 +286,14 @@ export default {
             // end DragLinkingTool
 
             // detect when dropped onto an occupied cell
-            myDiagram.addDiagramListener("SelectionMoved", shiftNodesToEmptySpaces);
+            treeCutDiagram.addDiagramListener("SelectionMoved", shiftNodesToEmptySpaces);
 
             function shiftNodesToEmptySpaces() {
-                myDiagram.selection.each(function(node) {
+                treeCutDiagram.selection.each(function(node) {
                 if (!(node instanceof go.Node)) return;
                 // look for Parts overlapping the node
                 while (true) {
-                    var exist = myDiagram.findObjectsIn(node.actualBounds,
+                    var exist = treeCutDiagram.findObjectsIn(node.actualBounds,
                     // only consider Parts
                     function(obj) { return obj.part; },
                     // ignore Links and the dropped node itself
@@ -306,8 +309,8 @@ export default {
 
             
 
-            myDiagram.addDiagramListener("LayoutCompleted", function(e) {
-                myDiagram.nodes.each(function(node) {
+            treeCutDiagram.addDiagramListener("LayoutCompleted", function(e) {
+                treeCutDiagram.nodes.each(function(node) {
                 if (node.category === "Recycle") return;
                 node.minLocation = new go.Point(node.location.x, -Infinity);
                 });
@@ -317,6 +320,7 @@ export default {
             this.layout();
         },
         load(){
+            var $ = go.GraphObject.make;
             var model = $(go.GraphLinksModel);
             model.nodeDataArray=
             [
@@ -328,10 +332,10 @@ export default {
             [
                 
             ];
-            myDiagram.model = model;
+            treeCutDiagram.model = model;
         },
         layout(){
-            myDiagram.layoutDiagram(true);
+            treeCutDiagram.layoutDiagram(true);
         }
         
     },
@@ -343,7 +347,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-    .Diagram{
+    .treeCutDiagram{
         width: 100%;
 
         flex-grow: 1;

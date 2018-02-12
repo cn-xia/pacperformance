@@ -3,70 +3,95 @@
     <panel-title :title="$route.meta.title"></panel-title>
     <div class="panel-body">
       <el-row :gutter="20">
-      <el-col :span="8" style="min-width: 310px">
-        <div >
-        <ruleTable style=" position:relative;"></ruleTable>
+      <el-col :span="9" style="min-width: 310px">
+        <div class="ruleRepe">
+          <ruleTable style=" position:relative;"></ruleTable>
         </div>
       </el-col>
-      <el-col style="border: 1px solid lightgray;padding: 10px" :span ="12">
-        <el-row  :gutter="0">
-
-          <div class="main-right tab">
-            <div class="tabs">
-              <button class="tab" style="display:inline-block;float: left"@click="toggleTab('drawTreeArea','ruleTable')"><a>Tree1</a></button>
-              <button class="tab" style="display:inline-block"@click="toggleTab('drawTreeArea','ruleTable')"><a>Tree2</a></button>
-            </div>
-
-            <component :is="currentTree"></component>
-          </div>
-
-    <!--<drawTreeArea></drawTreeArea>-->
-        </el-row>
-
-        <el-row style="margin-top: 10px" :gutter="0">
-          <div >
-            <div class="main-right tab">
+      <el-col style="border: 1px solid lightgray;" :span ="15">
+        <el-row style="margin-top: 10px">
+          <el-tabs v-model="ruleTabs" tab-position="top">
+            <el-tab-pane label="定制规则" name="rule">
+              <div class="ruleDrag">
+                <component :is="currentRule"></component>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="描述文件" name="xml">
+              <meta-rule-xml></meta-rule-xml>
+            </el-tab-pane>
+          </el-tabs>
+            <!-- <div class="ruleDrag">
               <div class="tabs">
                 <button class="tab" style="display:inline-block;float: left"@click="toggleRule('ruleTable')"><a>绑定规则</a></button>
                 <button class="tab" style="display:inline-block"@click="toggleRule('ruleXml')"><a>XML</a></button>
 
               </div>
               <component :is="currentRule"></component>
-            </div>
+            </div> -->
 
-          </div>
+          
           <br/>
         </el-row>
+        <el-row>
+
+          <!-- <div class="main-right tab">
+            <div class="tabs">
+              <button class="tab" style="display:inline-block;float: left"@click="toggleTab('cutTreeArea','ruleTable')"><a>Tree1</a></button>
+              <button class="tab" style="display:inline-block"@click="toggleTab('cutTreeArea','ruleTable')"><a>Tree2</a></button>
+            </div>
+
+            <component :is="currentTree"></component>
+          </div> -->
+            <el-tabs v-model="treeTabs" tab-position="top" style="height:57px;">
+                <el-tab-pane
+                    :key="item.key"
+                    v-for="(item,index) in treeTabsData"
+                    :label="item.name">
+                </el-tab-pane>
+            </el-tabs>
+            <component :is="currentTree"></component>
+
+    <!--<drawTreeArea></drawTreeArea>-->
+        </el-row>
+
+        
     </el-col>
       <!--</el-row>-->
       </el-row>
   </div>
   </div>
 </template>
-<style>
-  el-col{
-    overflow:auto; ;
-  }
-</style>
+
 <script type="text/javascript">
   import ruleTable from "../rule/ruleTable"
-  import ruleXml from "./ruleXml"
+  import metaRuleXml from "./metaRuleXml"
   import {panelTitle} from 'components'
-  import {drawTreeArea} from 'components'
+  import {relativeTree} from 'components'
 
   export default{
     data(){
       return {
-        msg: 'metaModel page',
-        currentTree:drawTreeArea,
-        currentRule:ruleTable
+        treeTabs:'0',
+        ruleTabs:'rule',
+        currentTree:relativeTree,
+        currentRule:ruleTable,
+        treeTabsData:[{
+            key:'1',
+            name:'商家实体树'
+        },{
+            key:'2',
+            name:'商品实体树'
+        },{
+            key:'3',
+            name:'订单实体树'
+        }]
       }
     },
     components: {
       panelTitle,
       ruleTable,
-      drawTreeArea,
-      ruleXml
+      relativeTree,
+      metaRuleXml
     },
     methods:{
       toggleTab:function(tab,rule){
@@ -79,3 +104,18 @@
     }
   }
 </script>
+<style scoped lang="scss">
+    .ruleRepe{
+        //width: 100%;
+        height: 825px;
+        border: 1px solid lightgray;
+        overflow: auto;
+        //background-color:	#F5FFFA;
+       // border-radius: 8px;
+    }
+    .ruleDrag{
+      height: 300px;
+      overflow: auto;
+      border: 1px solid lightgray;
+    }
+</style>

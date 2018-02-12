@@ -1,5 +1,5 @@
 <template>
-  <div style="min-width: 315px; height:100%; border: 1px solid lightgray">
+  <div style="min-width: 315px">
     <!-- <h3>商业规则</h3> -->
     <!--<div class="singleRule"style="display: block">-->
     <span style="margin-left: 10px;" v-for="item in rule" class="ruleBolck st" >

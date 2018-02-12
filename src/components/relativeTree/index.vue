@@ -1,90 +1,29 @@
 <template>
     <section style="display: flex;justify-content: space-between;">
-        <!-- <div id="myInspectorDiv" style="width:330px;" class="inspector"> </div> -->
-        <div id = "myInspectorDiv" class="attribute">
-            <el-form style="margin:10px;" ref= "form" :model="form" label-position="left" label-width="70px" size="mini">
-                <el-form-item label="key" key="key">
-                    <el-input v-model="form.key"></el-input>
-                </el-form-item>
-                <el-form-item label="name" key="name">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="Optional" key="Optional">
-                    <el-radio-group v-model="form.optional">
-                        <el-radio label="true"></el-radio>
-                        <el-radio label="false"></el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item
-                    v-for="(attri,index) in form.attris"
-                    :label="attri.label"
-                    :key="attri.label"
-                    :prop="'attris.'+index+'.value'">
-                    <el-col :span="19">
-                        <el-input v-model="attri.value"></el-input>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-button @click.prevent="removeAttri(attri)" type="danger" icon="delete" size="small"></el-button>
-                    </el-col>
-                </el-form-item>
-                <el-form-item>
-                    <el-button size="small" type="primary" icon="check">修改</el-button>
-                    <el-button size="small" type="primary" icon="plus" @click="dialogFormVisible = true">新增</el-button>
-                </el-form-item>
-            </el-form>
-            <el-dialog title="新增属性" :visible.sync="dialogFormVisible" width="30%">
-                <span>
-                    <el-form :model="addAttriForm" label-width="70px"> 
-                        <el-form-item label="属性名">
-                            <el-input v-model="addAttriForm.name" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="初始值" placeholder="可为空">
-                            <el-input v-model="addAttriForm.value" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-form>
-                </span>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addAttri('addAttriForm')">确 定</el-button>
-                </span>
-            </el-dialog>
-        </div>
-        <div id="myDiagramDiv" class="Diagram">
+        <div id="relativeDiagramDiv" class="Diagram">
+
         </div>
     </section>
 </template>
 <script>
 import go from "gojs"
-import "./inspector.css"
-import {Inspector} from "./DataInspector.js"
-var myDiagram;
-var $;
-var inspector;
+
+var relativeDiagram;
 export default {
-    name:"drawTreeArea",
+    name:"relativeTree",
     data() {
         return{
-            form:{
-                name:'',
-                key:'',
-                optional:'',
-                attris:[{
-                    value:"",
-                    label:"attri_1"
-                }]
-            },
-            dialogFormVisible:false,
-            addAttriForm:{
-                name:"",
-                value:""
-            }
+
         }
+    },
+    components:{
+        
     },
     methods:{
         init(){
-            $ = go.GraphObject.make;
-            myDiagram =
-                $(go.Diagram, "myDiagramDiv",
+            var $ = go.GraphObject.make;
+            relativeDiagram =
+                $(go.Diagram, "relativeDiagramDiv",
                 {
                     allowCopy: false,
                     initialContentAlignment: go.Spot.Center,
@@ -100,19 +39,19 @@ export default {
                     validCycle: go.Diagram.CycleNotDirected,
                     "undoManager.isEnabled": true
                 });
-            myDiagram.addDiagramListener("Modified", function(e) {
+            /* relativeDiagram.addDiagramListener("Modified", function(e) {
                 var button = document.getElementById("SaveButton");
-                if (button) button.disabled = !myDiagram.isModified;
+                if (button) button.disabled = !relativeDiagram.isModified;
                 var idx = document.title.indexOf("*");
-                if (myDiagram.isModified) {
+                if (relativeDiagram.isModified) {
                 if (idx < 0) document.title += "*";
                 } else {
                 if (idx >= 0) document.title = document.title.substr(0, idx);
                 }
-            });
+            }); */
             var graygrad = $(go.Brush, "Linear",
                        { 0: "white", 0.1: "whitesmoke", 0.9: "whitesmoke", 1: "lightgray" });
-            myDiagram.nodeTemplate =  // the default node template
+            relativeDiagram.nodeTemplate =  // the default node template
                 $(go.Node, "Spot",
                 { selectionAdorned: false, textEditable: true, locationObjectName: "BODY" },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -144,7 +83,7 @@ export default {
                     { width: 4, height: 4, fill: "dodgerblue", stroke: null })
                 )
                 );
-            myDiagram.nodeTemplate.contextMenu =
+            relativeDiagram.nodeTemplate.contextMenu =
                 $(go.Adornment, "Vertical",
                 $("ContextMenuButton",
                     $(go.TextBlock, "Rename"),
@@ -157,7 +96,7 @@ export default {
                     new go.Binding("visible", "", function(o) { return o.diagram && o.diagram.commandHandler.canDeleteSelection(); }).ofObject())
                 );
             
-            myDiagram.nodeTemplateMap.add("Loading",
+            relativeDiagram.nodeTemplateMap.add("Loading",
                 $(go.Node, "Spot",
                 { selectionAdorned: false, textEditable: true, locationObjectName: "BODY" },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -182,13 +121,13 @@ export default {
                 )
                 ));
 
-            myDiagram.nodeTemplateMap.add("Recycle",
+            relativeDiagram.nodeTemplateMap.add("Recycle",
                 $(go.Node, "Auto",
                 { portId: "to", toLinkable: true, deletable: false,
                     layerName: "Background", locationSpot: go.Spot.Center },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
                 { dragComputation: function(node, pt, gridpt) { return pt; } },
-                { mouseDrop: function(e, obj) { myDiagram.commandHandler.deleteSelection(); } },
+                { mouseDrop: function(e, obj) { relativeDiagram.commandHandler.deleteSelection(); } },
                 $(go.Shape,
                     { fill: "lightgray", stroke: "gray" ,figure:"Database",width:60}),
                 $(go.TextBlock, "回收站",
@@ -252,31 +191,31 @@ export default {
                 }
             }
 
-            myDiagram.addDiagramListener("LinkDrawn", function(e) {
+            relativeDiagram.addDiagramListener("LinkDrawn", function(e) {
                 var link = e.subject;
-                if (link.toNode.category === "Recycle") myDiagram.remove(link);
+                if (link.toNode.category === "Recycle") relativeDiagram.remove(link);
                 lowlight();
             });
 
-            myDiagram.addDiagramListener("LinkRelinked", function(e) {
+            relativeDiagram.addDiagramListener("LinkRelinked", function(e) {
                 var link = e.subject;
-                if (link.toNode.category === "Recycle") myDiagram.remove(link);
+                if (link.toNode.category === "Recycle") relativeDiagram.remove(link);
                 lowlight();
             });
 
-            myDiagram.linkTemplate =
+            relativeDiagram.linkTemplate =
                 $(go.Link,
                 { selectionAdorned: false, fromPortId: "from", toPortId: "to", relinkableTo: true },
                 $(go.Shape,
                     { stroke: "gray", strokeWidth: 2 },
                     { mouseEnter: function(e, obj) { obj.strokeWidth = 3; obj.stroke = "dodgerblue"; },
                     mouseLeave: function(e, obj) { obj.strokeWidth = 2; obj.stroke = "gray"; } }),
-                /* $(go.Panel, "Auto",
+                $(go.Panel, "Auto",
                     { _isLinkLabel: true,click: changeFeature},  // marks this Panel as being a draggable label
                     $(go.Shape, "RoundedRectangle",{ fill: "lightblue" ,stroke:null,cursor: "pointer",width:20},
                      { mouseEnter: function(e, obj) { obj.strokeWidth = 2; obj.stroke = "white"; },
                         mouseLeave: function(e, obj) { obj.stroke =null; } }),
-                    $(go.TextBlock, "B", { margin: 0 ,font: "bold 10pt sans-serif",stroke: "red",name:"FEAT"})) */
+                    $(go.TextBlock, "B", { margin: 0 ,font: "bold 10pt sans-serif",stroke: "red",name:"FEAT"}))
                 );
             
             function commonLinkingToolInit(tool) {
@@ -303,12 +242,12 @@ export default {
                 };
             }
 
-            var ltool = myDiagram.toolManager.linkingTool;
+            var ltool = relativeDiagram.toolManager.linkingTool;
             commonLinkingToolInit(ltool);
             // do not allow links to be drawn starting at the "to" port
             ltool.direction = go.LinkingTool.ForwardsOnly;
 
-            var rtool = myDiagram.toolManager.relinkingTool;
+            var rtool = relativeDiagram.toolManager.relinkingTool;
             commonLinkingToolInit(rtool);
             // change the standard relink handle to be a shape that takes the shape of the link
             rtool.toHandleArchetype =
@@ -316,7 +255,7 @@ export default {
                 { isPanelMain: true, fill: null, stroke: "dodgerblue", strokeWidth: 4 });
 
             // use a special DraggingTool to cause the dragging of a Link to start relinking it
-           // myDiagram.toolManager.draggingTool = new DragLinkingTool();
+           // relativeDiagram.toolManager.draggingTool = new DragLinkingTool();
 
             function DragLinkingTool() {
                 go.DraggingTool.call(this);
@@ -348,14 +287,14 @@ export default {
             // end DragLinkingTool
 
             // detect when dropped onto an occupied cell
-            myDiagram.addDiagramListener("SelectionMoved", shiftNodesToEmptySpaces);
+            relativeDiagram.addDiagramListener("SelectionMoved", shiftNodesToEmptySpaces);
 
             function shiftNodesToEmptySpaces() {
-                myDiagram.selection.each(function(node) {
+                relativeDiagram.selection.each(function(node) {
                 if (!(node instanceof go.Node)) return;
                 // look for Parts overlapping the node
                 while (true) {
-                    var exist = myDiagram.findObjectsIn(node.actualBounds,
+                    var exist = relativeDiagram.findObjectsIn(node.actualBounds,
                     // only consider Parts
                     function(obj) { return obj.part; },
                     // ignore Links and the dropped node itself
@@ -371,64 +310,37 @@ export default {
 
             
 
-            myDiagram.addDiagramListener("LayoutCompleted", function(e) {
-                myDiagram.nodes.each(function(node) {
+            relativeDiagram.addDiagramListener("LayoutCompleted", function(e) {
+                relativeDiagram.nodes.each(function(node) {
                 if (node.category === "Recycle") return;
                 node.minLocation = new go.Point(node.location.x, -Infinity);
                 });
             }); 
-            
-
-            /* inspector = new Inspector('myInspectorDiv',myDiagram,{
-                properties:{
-                    "text":{},
-                    "loc":{show:false},
-                    "category":{show:false},
-                    
-                }
-
-            }); */
 
             this.load();
             this.layout();
-            myDiagram.select(myDiagram.nodes.first());
         },
         load(){
+            var $ = go.GraphObject.make;
             var model = $(go.GraphLinksModel);
             model.nodeDataArray=
             [
                 { "key":1, "text":"Loading Screen", "category":"Loading" },
                 
-                { "key":-2, "category": "Recycle" }
             ];
             model.linkDataArray= 
             [
                 
             ];
-            myDiagram.model = model;
+            relativeDiagram.model = model;
         },
         layout(){
-            myDiagram.layoutDiagram(true);
-        },
-        removeAttri(item){
-            var index = this.form.attris.indexOf(item);
-            if(index!==-1){
-                this.form.attris.splice(index,1);
-            }
-        },
-        addAttri(formName){
-            this.dialogFormVisible = false;
-            var label = this.addAttriForm.name;
-            var value = this.addAttriForm.value;
-            this.form.attris.push({value:value,label:label});
-            this.addAttriForm.name = "";
-            this.addAttriForm.value = "";
+            relativeDiagram.layoutDiagram(true);
         }
         
     },
     mounted:function(){
         this.init();
-        this.form.attris.splice(0,1);
     }
 
 
@@ -436,17 +348,13 @@ export default {
 </script>
 <style scoped lang="scss">
     .Diagram{
-        width: 85%;
-        
-        height: 558px;
+        width: 100%;
+
+        flex-grow: 1;
+        height: 380px;
         
         border: 1px solid lightgray;
         //background-color:	#F5FFFA;
        // border-radius: 8px;
-    }
-    .attribute{
-        overflow: auto;
-        border: 1px solid lightgray;
-        height: 558px;
     }
 </style>

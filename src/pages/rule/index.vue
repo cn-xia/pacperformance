@@ -4,16 +4,22 @@
     <div class="panel-body">
       <el-row :gutter="20">
 
-        <el-col class="rule" :span="8">
-          <div  >
-            <div class="main-right tab">
+        <el-col :span="14" :offset="3">
+          <el-tabs v-model="ruleTabs" tab-position="top">
+              <el-tab-pane label="组织货品" name="organize"></el-tab-pane>
+              <el-tab-pane label="商品发布准备" name="release"></el-tab-pane>
+          </el-tabs>
+          <div class="rule" >
+            <!-- <div class="main-right tab">
               <div class="tabs">
                 <button class="tab" style="display:inline-block;float: left"@click="toggleTab('ruleTable')"><a>组织货品</a></button>
                 <button class="tab" style="display:inline-block"@click="toggleTab('ruleTable')"><a>商品发布准备</a></button>
 
               </div>
             <component :is="currentTab"></component>
-            </div>
+            </div> -->
+            <component :is="currentTab"></component>
+            
           </div>
 
           <!--<div v-for="(list,index) in lists" class="rule v-col&#45;&#45;auto">-->
@@ -51,7 +57,7 @@
 
         </el-col>
         <el-col  :span="5" >
-          <br/><br/><br/><br/>
+          <br/><br/><br/>
           <smalblock ></smalblock>
 
           <!--<div v-for="(list, listName) in lists" class="v-col&#45;&#45;auto">-->
@@ -90,6 +96,7 @@
   export default{
     data(){
       return{
+        ruleTabs:'organize',
         "lists": {
           "A": [
             {
@@ -176,12 +183,13 @@
   }
 </script>
 <style  lang="scss">
-    .rule .slot {
+    .rule{
         width: 100%;
         height: 558px;
         border: 1px solid lightgray;
         //background-color:	#F5FFFA;
        // border-radius: 8px;
+        overflow: auto;
     }
   .tabs{
     overflow: hidden;

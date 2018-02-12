@@ -11,6 +11,8 @@ import panelTitle from 'components/panelTitle'
 import bottomToolBar from 'components/bottomToolBar'
 import drawTreeArea from 'components/drawTreeArea'
 import cutTreeArea from 'components/cutTreeArea'
+import relativeTree from 'components/relativeTree'
+import flowPic from 'components/flowPic'
 
 export {
   leftSlide,
@@ -18,5 +20,7 @@ export {
   panelTitle,
   bottomToolBar,
   drawTreeArea,
-  cutTreeArea
+  cutTreeArea,
+  flowPic,
+  relativeTree
 }

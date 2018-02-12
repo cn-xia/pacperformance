@@ -13,6 +13,10 @@
             highlight-current-row
             @current-change="handleCurrentChange">
             <el-table-column
+              type="selection"
+              width="35">
+            </el-table-column>
+            <el-table-column
               type="index"
               align="center"
               width="50">
@@ -20,7 +24,8 @@
             <el-table-column
               prop="name"
               label="特征树"
-              align="center">
+              align="center"
+              show-overflow-tooltip>
             </el-table-column>
           </el-table>
         </el-col>
@@ -38,11 +43,11 @@
     data(){
       return {
         treeData:[{
-          name:"第一棵树"
+          name:"商家实体树"
         },{
-          name:"第二棵树"
+          name:"商品实体树"
         },{
-          name:"第三棵树"
+          name:"订单实体树"
         }]
       }
     },

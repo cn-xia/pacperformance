@@ -1,5 +1,6 @@
 <template>
-  <div style="width:90px;height:150px;border: 1px solid lightgray">
+  
+  <div style="width:100px;height:150px;border: 1px solid lightgray">
 
 
 <span contenteditable="true" class="ruleBolck subject">{{obj[0]}}</span>

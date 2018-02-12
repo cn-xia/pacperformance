@@ -43,11 +43,11 @@
       return {
         currentRow: null,
         treeData:[{
-          name:"第一棵树"
+          name:"商家实体树"
         },{
-          name:"第二棵树"
+          name:"商品实体树"
         },{
-          name:"第三棵树"
+          name:"订单实体树"
         }]
       }
     },
