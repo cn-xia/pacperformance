@@ -16,6 +16,8 @@ import viewPageComponent from 'pages/App'
 import homeComponent from 'pages/home'
 //rule
 import ruleComponent from 'pages/rule'
+//业务建模
+import businessmodel from 'pages/modeling/businessmodel'
 //treecut
 import treeCutComponent from 'pages/modeling/treecut'
 //metamodel
@@ -63,7 +65,15 @@ const routes = [{
       title:"规则库管理",
       auth:true
     }
-  }, /* {
+  }, {
+    path:'/model',
+    name:'model',
+    component: businessmodel,
+    meta:{
+      title:"业务建模",
+      auth:true
+    }
+  },/* {
     path: '/table/update/:id',
     name: 'tableUpdate',
     component: saveTableComponent,

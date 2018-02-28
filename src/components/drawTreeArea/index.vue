@@ -32,31 +32,33 @@
                     <el-button size="small" type="primary" icon="plus" @click="dialogFormVisible = true">新增</el-button>
                 </el-form-item>
             </el-form>
-            <el-dialog title="新增属性" :visible.sync="dialogFormVisible" width="30%">
-                <span>
-                    <el-form :model="addAttriForm" label-width="70px"> 
-                        <el-form-item label="属性名">
-                            <el-input v-model="addAttriForm.name" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="初始值" placeholder="可为空">
-                            <el-input v-model="addAttriForm.value" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-form>
-                </span>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addAttri('addAttriForm')">确 定</el-button>
-                </span>
-            </el-dialog>
+            
         </div>
         <div id="myDiagramDiv" class="Diagram">
         </div>
+        <el-dialog title="新增属性" :visible.sync="dialogFormVisible" style="width:1000px">
+            <span>
+                <el-form :model="addAttriForm" label-width="70px"> 
+                    <el-form-item label="属性名">
+                        <el-input v-model="addAttriForm.name" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="初始值" placeholder="可为空">
+                        <el-input v-model="addAttriForm.value" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+            </span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addAttri('addAttriForm')">确 定</el-button>
+            </span>
+        </el-dialog>
     </section>
 </template>
 <script>
 import go from "gojs"
 import "./inspector.css"
 import {Inspector} from "./DataInspector.js"
+import treedata from "../../assets/data/treedata.json"
 var myDiagram;
 var $;
 var inspector;
@@ -395,16 +397,19 @@ export default {
         },
         load(){
             var model = $(go.GraphLinksModel);
-            model.nodeDataArray=
-            [
+            treedata.nodeDataArray.push({"key":-2, "category": "Recycle"})
+            model.nodeDataArray=treedata.nodeDataArray;
+            //model.nodeDataArray.push({"key":-2, "category": "Recycle"});
+            /* [
                 { "key":1, "text":"Loading Screen", "category":"Loading" },
                 
                 { "key":-2, "category": "Recycle" }
-            ];
-            model.linkDataArray= 
-            [
+            ]; */
+            console.log(model.nodeDataArray);
+            model.linkDataArray= treedata.linkDataArray;
+           /*  [
                 
-            ];
+            ]; */
             myDiagram.model = model;
         },
         layout(){

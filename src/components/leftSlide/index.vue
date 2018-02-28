@@ -53,7 +53,11 @@
           title: "规则库管理",
           path: "/rule",
           icon: "fa-object-group",
-        }, {
+        },/*  {
+          title: "业务建模",
+          path: "/model",
+          icon: "fa-cubes",
+        }, */{
           title: "业务建模",
           path: "/modeling",
           icon: "fa-cubes",

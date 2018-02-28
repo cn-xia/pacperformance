@@ -4,9 +4,23 @@
     <div class="panel-body">
       <el-row :gutter="20">
       <el-col :span="9" style="min-width: 310px">
-        <div class="ruleRepe">
-          <ruleTable style=" position:relative;"></ruleTable>
-        </div>
+        <el-row>
+          <div style="margin-bottom:5px;">
+            <el-select v-model="ruleType" placeholder="请选择模块">
+              <el-option
+                v-for="item in ruleOptions"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+        </el-row>
+        <el-row>
+          <div class="ruleRepe">
+            <ruleTable style=" position:relative;"></ruleTable>
+          </div>
+        </el-row>
       </el-col>
       <el-col style="border: 1px solid lightgray;" :span ="15">
         <el-row style="margin-top: 10px">
@@ -45,7 +59,7 @@
             <el-tabs v-model="treeTabs" tab-position="top" style="height:57px;">
                 <el-tab-pane
                     :key="item.key"
-                    v-for="(item,index) in treeTabsData"
+                    v-for="item in treeTabsData"
                     :label="item.name">
                 </el-tab-pane>
             </el-tabs>
@@ -73,6 +87,7 @@
       return {
         treeTabs:'0',
         ruleTabs:'rule',
+        ruleType:'',
         currentTree:relativeTree,
         currentRule:ruleTable,
         treeTabsData:[{
@@ -84,7 +99,9 @@
         },{
             key:'3',
             name:'订单实体树'
-        }]
+        }],
+        ruleOptions:[{value:"会员管理"},{value:"组织货品"},{value:"招商"},{value:"促销活动"},
+          {value:"导购"},{value:"交易"},{value:"售后"},{value:"资金结算"}]
       }
     },
     components: {
@@ -107,7 +124,7 @@
 <style scoped lang="scss">
     .ruleRepe{
         //width: 100%;
-        height: 825px;
+        height: 785px;
         border: 1px solid lightgray;
         overflow: auto;
         //background-color:	#F5FFFA;

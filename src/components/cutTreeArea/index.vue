@@ -6,7 +6,7 @@
 </template>
 <script>
 import go from "gojs"
-
+import treedata from "../../assets/data/treedata.json"
 var treeCutDiagram;
 export default {
     name:"cutTreeArea",
@@ -68,10 +68,10 @@ export default {
                 // output port
                 $(go.Panel, "Auto",
                     { alignment: go.Spot.Bottom, portId: "from", fromLinkable: true, cursor: "pointer", click: addNodeAndLink },
-                    $(go.Shape, "Circle",
+                    /* $(go.Shape, "Circle",
                     { width: 18, height: 18, fill: "white", stroke: "dodgerblue", strokeWidth: 3 }),
                     $(go.Shape, "PlusLine",
-                    { width: 11, height: 11, fill: null, stroke: "dodgerblue", strokeWidth: 3 })
+                    { width: 11, height: 11, fill: null, stroke: "dodgerblue", strokeWidth: 3 }) */
                 ),
                 // input port
                 $(go.Panel, "Auto",
@@ -113,10 +113,10 @@ export default {
                 // output port
                 $(go.Panel, "Auto",
                     { alignment: go.Spot.Bottom, portId: "from", fromLinkable: true, click: addNodeAndLink },
-                    $(go.Shape, "Circle",
+                    /* $(go.Shape, "Circle",
                     { width: 18, height: 18, fill: "white", stroke: "dodgerblue", strokeWidth: 3 }),
                     $(go.Shape, "PlusLine",
-                    { width: 11, height: 11, fill: null, stroke: "dodgerblue", strokeWidth: 3 })
+                    { width: 11, height: 11, fill: null, stroke: "dodgerblue", strokeWidth: 3 }) */
                 )
                 ));
 
@@ -209,12 +209,12 @@ export default {
                     { stroke: "gray", strokeWidth: 2 },
                     { mouseEnter: function(e, obj) { obj.strokeWidth = 3; obj.stroke = "dodgerblue"; },
                     mouseLeave: function(e, obj) { obj.strokeWidth = 2; obj.stroke = "gray"; } }),
-                $(go.Panel, "Auto",
+                /* $(go.Panel, "Auto",
                     { _isLinkLabel: true,click: changeFeature},  // marks this Panel as being a draggable label
                     $(go.Shape, "RoundedRectangle",{ fill: "lightblue" ,stroke:null,cursor: "pointer",width:20},
                      { mouseEnter: function(e, obj) { obj.strokeWidth = 2; obj.stroke = "white"; },
                         mouseLeave: function(e, obj) { obj.stroke =null; } }),
-                    $(go.TextBlock, "B", { margin: 0 ,font: "bold 10pt sans-serif",stroke: "red",name:"FEAT"}))
+                    $(go.TextBlock, "B", { margin: 0 ,font: "bold 10pt sans-serif",stroke: "red",name:"FEAT"})) */
                 );
             
             function commonLinkingToolInit(tool) {
@@ -322,16 +322,13 @@ export default {
         load(){
             var $ = go.GraphObject.make;
             var model = $(go.GraphLinksModel);
-            model.nodeDataArray=
-            [
+            model.nodeDataArray=treedata.nodeDataArray;
+            /* [
                 { "key":1, "text":"Loading Screen", "category":"Loading" },
                 
                 { "key":-2, "category": "Recycle" }
-            ];
-            model.linkDataArray= 
-            [
-                
-            ];
+            ]; */
+            model.linkDataArray=treedata.linkDataArray;
             treeCutDiagram.model = model;
         },
         layout(){
